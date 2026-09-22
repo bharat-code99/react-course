@@ -1,38 +1,36 @@
-import axios from "axios";
-import { useState } from "react";
+import { Route, Routes } from "react-router";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Product from "./pages/Product";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import NotFound from "./pages/NotFound";
+import Men from "./pages/Men";
+import Women from "./pages/Women";
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
+import SubNav from "./components/SubNav";
 
 export default function App() {
-  const [data, setData] = useState({});
-
-  const getData = async () => {
-    // const response = await axios.get("https://jsonplaceholder.typicode.com/todos/10");
-    // // console.log(response.data);
-    // setData(response.data);
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title: "foo",
-        body: "bar",
-        userId: 1,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
-  };
-
   return (
     <div>
-      <button
-        className="bg-blue-400 text-white font-medium px-5 py-2.5 rounded-md m-10 text-xs"
-        onClick={getData}
-      >
-        Get Data
-      </button>{" "}
-      <br />
-      App
+      <Navbar />
+      <SubNav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/courses/:courseId" element={<CourseDetail />} />
+        <Route path="/product" element={<Product />}>
+          <Route path="men" element={<Men />} />
+          <Route path="women" element={<Women />} />
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
